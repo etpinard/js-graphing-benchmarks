@@ -1,0 +1,28 @@
+{
+  "name": "js-graphing-benchmarks",
+  "version": "0.0.1",
+  "description": "Javascript graphing library benchmarks",
+  "main": "index.js",
+  "scripts": {
+    "bench": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etpinard/js-graphing-benchmarks.git"
+  },
+  "author": "Étienne Tétreault-Pinard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/etpinard/js-graphing-benchmarks/issues"
+  },
+  "homepage": "https://github.com/etpinard/js-graphing-benchmarks#readme",
+  "dependencies": {
+    "browserify": "^13.0.0",
+    "karma": "^0.13.19",
+    "karma-benchmark": "^0.4.0",
+    "karma-browserify": "^5.0.1",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-plotly-reporter": "^0.1.0"
+  }
+}
