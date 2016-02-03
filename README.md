@@ -1,2 +1,3 @@
 # js-graphing-benchmarks
-Javascript graphing librarybBenchmarks
+
+Javascript graphing library benchmarks
