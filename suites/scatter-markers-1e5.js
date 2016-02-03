@@ -4,6 +4,7 @@
 suite('scatter markers 1e5', function() {
 
     benchmark('plotly.js', function() {
+        // taken from http://codepen.io/etpinard/pen/XXrzBe
 
         Plotly.plot('graph', [{
             type: 'scattergl',
@@ -15,7 +16,7 @@ suite('scatter markers 1e5', function() {
     });
 
     benchmark('highcharts', function() {
-        // taking from http://jsfiddle.net/highcharts/utvok2zo/
+        // taken from http://jsfiddle.net/highcharts/utvok2zo/
 
         $('#graph').highcharts({
             chart: { zoomType: 'xy' },
