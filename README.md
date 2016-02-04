@@ -9,13 +9,39 @@ Comparisons with other libraries is in the plans.
 
 ## How to run this thing?
 
+### 1. Setup
+
 - Clone this repo
 - cd into it
 - Run `npm i`
+
+### 2. Run a benchmark suite
+
 - Pick one benchmark suite (`ls suites`)
 - Run `npm run bench -- <name-of-the-suite>`
 
+Then check the full results in `./results/<name-of-the-suite>.json`.
+
+### 3. Plot the results
+
+- Make yourself a free [plotly](https://plot.ly/) account
+- Set up your plotly API [credentials](https://plot.ly/settings/api/) in
+  `./plotly_crendentials.json` as
+
+```json
+{
+    "username": "your-plotly-username",
+    "apiKey": "your-api-key"
+}
+```
+
+- Run `npm run plot -- <name-of-the-suite>` to plot the results of one benchmark
+  suite
+- OR Run `npm run plot` to plot the results of benchmark suites in `results/`
+
+
 ## How does this work?
+
 
 
 ### What libraries are used?

@@ -7,27 +7,54 @@ var plotly = require('plotly')(creds.username, creds.apiKey);
 
 var pathToResults = path.join(__dirname, 'results');
 
-glob(pathToResults + '/*.json', function(err, files) {
-  files.forEach(function(file) {
-    fs.readFile(file, 'utf-8', function(err, raw) {
-      var mark = JSON.parse(raw);
-      var suite = mark.meta.suite;
-      var figure = makeFigure(mark);
+/**
+ * Plot the results of one benchmark suite (or all of them)
+ *
+ * Example 1:
+ *
+ *  npm run plot -- scatter-markers-1e5
+ *
+ * plots the results of "scatter-markers-1e5" The complete list of benchmarks
+ * suite is in the suites/ directory.
+ *
+ * Example 2:
+ *
+ *  npm run plot
+ *
+ * plots the results of benchmarks in results/
+ *
+ */
+var suiteName = process.argv[2];
 
-      plotly.plot(figure.data, figure.graphOptions, function(err, msg) {
-        console.log([
-          '> See results suite',
-          '"' +suite + '"',
-          'at:',
-          msg.url
-        ].join(' '));
-      });
-
-      // TODO download image with toImage ?
-
-    });
+if(suiteName) {
+  var pathToResult = path.join(pathToResults, suiteName + '.json');
+  plotOne(pathToResult);
+}
+else {
+  glob(pathToResults + '/*.json', function(err, files) {
+    files.forEach(plotOne);
   });
-});
+}
+
+function plotOne(file) {
+  fs.readFile(file, 'utf-8', function(err, raw) {
+    var mark = JSON.parse(raw);
+    var suite = mark.meta.suite;
+    var figure = makeFigure(mark);
+
+    plotly.plot(figure.data, figure.graphOptions, function(err, msg) {
+      console.log([
+        '> See results suite',
+        '"' + suite + '"',
+        'at:',
+        msg.url
+      ].join(' '));
+    });
+
+    // TODO download image with toImage ?
+
+  });
+}
 
 function makeFigure(mark) {
   var suite = mark.meta.suite;
@@ -46,7 +73,7 @@ function makeFigure(mark) {
     trace.y.push(r.name);
     trace.x.push(r.mean);
     trace.error_x.array.push(r.std);
-  
+
     longestLabel = Math.max(longestLabel, r.name);
   });
 
@@ -64,8 +91,8 @@ function makeFigure(mark) {
         xaxis: { title: 'time [sec]' }
       }
     }
-  
-  
+
+
   };
 }
 
