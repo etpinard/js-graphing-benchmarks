@@ -9,7 +9,7 @@ var createGraphDiv = require('../assets/create_graph_div');
 var destroyGraphDiv = require('../assets/destroy_graph_div');
 
 // number of points to plot
-var N = 1e5;
+var N = 1e6;
 
 // set the sample size
 var SAMPLE_SIZE = 10;
