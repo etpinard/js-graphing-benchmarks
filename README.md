@@ -16,7 +16,7 @@ Comparisons with other libraries are in the plans.
 - `cd js-graphing-benchmarks`
 - Run `npm i`
 
-##### 2. Run one benchmark suite
+##### 2. Run a benchmark suite
 
 - Pick one benchmark suite (run `ls suites` for the complete list of names)
 - Run `npm run bench -- <name-of-the-suite>`
@@ -38,7 +38,7 @@ Then check the full results in `./results/<name-of-the-suite>.json`.
 
 - Run `npm run plot -- <name-of-the-suite>` to plot the results of one benchmark
   suite
-- **OR** run `npm run plot` to plot the results of benchmark suites in `results/`
+- **OR** run `npm run plot` to plot the results of benchmark suites in `./results/`
 
 
 ## How does this work?
@@ -57,7 +57,7 @@ utility and karma
 The homemade benchmarking utility uses
 [`window.performance`](https://developer.mozilla.org/en-US/docs/Web/API/Window/performance)
 to compute time deltas.
-Finally, the results are plotted on [plotly](https://plot.ly/) using plotly's
+Finally, the results are plotted on [plot.ly](https://plot.ly/) using plotly's
 [node.js API](https://github.com/plotly/plotly-nodejs).
 
 ##### What libraries are used?
