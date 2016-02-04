@@ -2,7 +2,7 @@
 
 /* global Plotly:false, $:false, Highcharts:false */
 
-var run = require('../run');
+var run = require('../lib/run');
 var makeRandomData = require('../assets/make_random_data');
 var createGraphDiv = require('../assets/create_graph_div');
 var createGraphDiv = require('../assets/create_graph_div');

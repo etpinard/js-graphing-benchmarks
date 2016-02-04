@@ -4,9 +4,9 @@
   "description": "Javascript graphing library benchmarks",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node postinstall",
+    "postinstall": "node lib/postinstall",
     "bench": "karma start karma.conf.js",
-    "plot": "node plot.js"
+    "plot": "node lib/plot.js"
   },
   "repository": {
     "type": "git",
