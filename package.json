@@ -21,6 +21,7 @@
   "dependencies": {
     "browserify": "^13.0.0",
     "fs-extra": "^0.26.5",
+    "glob": "^6.0.4",
     "karma": "^0.13.19",
     "karma-browserify": "^5.0.1",
     "karma-chrome-launcher": "^0.2.2",

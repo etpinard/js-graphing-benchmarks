@@ -22,7 +22,7 @@ var reporter = function(baseReporterDecorator, config) {
   this.onRunComplete = function(browser, info) {
     var formattedResults = formatResults(results, meta, opts, config);
     fs.writeFileSync(pathToOut, formattedResults);
-    this.write('  Results written in ' + pathToOut);
+    this.write('  Results written in ' + pathToOut + '\n');
   };
 
 };
