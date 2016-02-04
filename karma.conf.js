@@ -1,68 +1,80 @@
-var path = require('path');
+/**
+ * This karma configuration file takes one argument,
+ * specifying which benchmark suite to run.
+ *
+ * Example:
+ *
+ *  npm run bench -- scatter-markers-1e5
+ *
+ * The complete list of benchmarks suite is in the
+ * suites/ directory.
+ *
+ */
+var suiteName = process.argv[4];
 
-var plotlyCredentials = require('./plotly_credentials');
+if(!suiteName) {
+  throw new Error('Must provide a valid suite name');
+}
+
+var suitePath = 'suites/' + suiteName + '.js';
 
 
-module.exports = function(config) {
-    config.set({
-        basePath: '.',
+function func(config) {
+  config.set(func.defaultConfig);
+}
 
-        frameworks: ['benchmark', 'browserify'],
+func.defaultConfig = {
 
-        files: [
-            // plotly.js
-            'https://cdn.plot.ly/plotly-latest.min.js',
+  // start these browsers
+  // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+  browsers: ['Chrome'],
+//   browsers: ['Chrome', 'Firefox'],
 
-            // highcharts
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
-            'https://code.highcharts.com/highcharts.js',
-            'https://code.highcharts.com/modules/boost.js',
-            'https://code.highcharts.com/modules/exporting.js',
+  basePath: '.',
 
-            'suites/*.js'
-        ],
+  files: [
+    // plotly.js
+    'https://cdn.plot.ly/plotly-latest.min.js',
 
-        preprocessors: {
-            'suites/*.js': ['browserify']
-        },
+    // highcharts
+    'http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
+    'https://code.highcharts.com/highcharts.js',
+    'https://code.highcharts.com/modules/boost.js',
+    'https://code.highcharts.com/modules/exporting.js',
 
-        reporters: ['plotly'],
-        plotlyReporter: {
-            pathToJson: path.join(__dirname, 'results', 'benchmarks.json'),
-            formatJson: function(results) {
-                results.meta.date = (new Date()).toTimeString();
-                results.meta.version = 'v1.5.1';
-                return results;
-            },
-            username: plotlyCredentials.username,
-            apiKey: plotlyCredentials.apiKey,
-            filename: 'benchmarks',
-            fileopt: 'overwrite'
-        },
+    suitePath
+  ],
 
-        // web server port
-        port: 9876,
+  frameworks: ['browserify', 'custom'],
+  reporters: ['custom'],
 
-        // enable / disable colors in the output (reporters and logs)
-        colors: true,
+  // pass suite name onto reporter
+  suiteName: suiteName,
 
-        // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+  // N.B. set below
+  preprocessors: {},
 
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-//         browsers: ['Chrome'],
-        browsers: ['Firefox'],
-//         browsers: ['Chrome', 'Firefox'],
+  // web server port
+  port: 9876,
 
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
+  // enable / disable colors in the output (reporters and logs)
+  colors: true,
 
-        // to avoid DISCONNECTED messages
-        captureTimeout: 100000, // default 60000
-        browserDisconnectTimeout: 500000, // default 2000
-        browserDisconnectTolerance: 0, // default 0
-        browserNoActivityTimeout: 500000, //default 10000
-    });
+  // enable / disable watching file and executing tests whenever any file changes
+  autoWatch: false,
+
+  // Continuous Integration mode
+  // if true, Karma captures browsers, runs the tests and exits
+  singleRun: true,
+
+  // to avoid DISCONNECTED messages
+  captureTimeout: 100000, // default 60000
+  browserDisconnectTimeout: 500000, // default 2000
+  browserDisconnectTolerance: 0, // default 0
+  browserNoActivityTimeout: 500000, //default 10000
 };
+
+// browserify the benchmark suite file
+func.defaultConfig.preprocessors[suitePath] = ['browserify'];
+
+module.exports = func;

@@ -1,9 +1,10 @@
 {
   "name": "js-graphing-benchmarks",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Javascript graphing library benchmarks",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node postinstall",
     "bench": "karma start karma.conf.js"
   },
   "repository": {
@@ -18,11 +19,11 @@
   "homepage": "https://github.com/etpinard/js-graphing-benchmarks#readme",
   "dependencies": {
     "browserify": "^13.0.0",
+    "fs-extra": "^0.26.5",
     "karma": "^0.13.19",
-    "karma-benchmark": "^0.4.0",
     "karma-browserify": "^5.0.1",
     "karma-chrome-launcher": "^0.2.2",
-    "karma-firefox-launcher": "^0.1.7",
-    "karma-plotly-reporter": "^0.1.0"
+    "karma-custom": "^1.1.9",
+    "karma-firefox-launcher": "^0.1.7"
   }
 }

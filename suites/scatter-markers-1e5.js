@@ -1,89 +1,91 @@
-/* global Plotly:false, $:false */
+'use strict';
 
+/* global Plotly:false, $:false, Highcharts:false */
 
-suite('scatter markers 1e5', function() {
+var run = require('../run');
+var makeRandomData = require('../assets/make_random_data');
+var createGraphDiv = require('../assets/create_graph_div');
+var createGraphDiv = require('../assets/create_graph_div');
+var destroyGraphDiv = require('../assets/destroy_graph_div');
 
-    benchmark('plotly.js', function() {
-        // taken from http://codepen.io/etpinard/pen/XXrzBe
+// number of points to plot
+var N = 1e5;
 
-        Plotly.plot('graph', [{
-            type: 'scattergl',
-            mode: 'markers',
-            x: this.x,
-            y: this.y
-        }]);
+// set the sample size
+var SAMPLE_SIZE = 5;
 
-    });
+var specs = [{
 
-    benchmark('highcharts', function() {
-        // taken from http://jsfiddle.net/highcharts/utvok2zo/
+  // taken from http://codepen.io/etpinard/pen/XXrzBe
+  name: 'plotly.js',
+  getVersion: function() {
+    return Plotly.version;
+  },
+  setup: function() {
+    var data = makeRandomData.forPlotly(N);
 
-        $('#graph').highcharts({
-            chart: { zoomType: 'xy' },
-            xAxis: {
-                min: 0,
-                max: 100,
-                gridLineWidth: 1
-            },
-            yAxis: {
-                // Renders faster when we don't have to compute min and max
-                min: 0,
-                max: 100,
-                minPadding: 0,
-                maxPadding: 0
-            },
-            title: {
-                text: 'Scatter chart with ' + Highcharts.numberFormat(this.xy.length, 0, ' ') + ' points'
-            },
-            legend: {
-                enabled: false
-            },
-            series: [{
-                type: 'scatter',
-                color: 'rgba(152,0,67,0.1)',
-                data: this.xy,
-                marker: {
-                    radius: 1
-                },
-                tooltip: {
-                    followPointer: false,
-                    pointFormat: '[{point.x:.1f}, {point.y:.1f}]'
-                },
-            }]
-        });
-    });
+    return [{
+      type: 'scattergl',
+      mode: 'markers',
+      x: data.x,
+      y: data.y
+    }];
+  },
+  beforeEach: function() {
+    createGraphDiv();
+  },
+  bench: function(benchObj, setupData) {
+    benchObj.startTimer();
+    Plotly.plot('graph', setupData);
+    benchObj.stopTimer();
+  },
+  afterEach: function() {
+    destroyGraphDiv();
+  }
 
 }, {
 
-    setup: function() {
-        // number of points to plot
-        var N = 1e5;
+  // taken from http://jsfiddle.net/highcharts/utvok2zo/
+  name: 'highcharts',
+  getVersion: function() {
+    return Highcharts.version;
+  },
+  setup: function(benchObj) {
+    var data = makeRandomData.forHighcharts(N);
 
-        var x = this.x = new Array(N);
-        var y = this.y = new Array(N);
-        var xy = this.xy = [];
-
-        for(var i = 0; i < N; i ++) {
-            var xx = Math.pow(Math.random(), 2) * 100;
-            var yy = Math.pow(Math.random(), 2) * 100;
-
-            x[i] = xx;
-            y[i] = yy;
-            xy.push([xx, yy]);
+    return {
+      series: [{
+        type: 'scatter',
+        data: data,
+        events: {
+          renderedCanvas: function () {
+            benchObj.stopTimer();
+          }
         }
+      }]
+    };
+  },
+  beforeEach: function() {
+    createGraphDiv();
+  },
+  bench: function(benchObj, setupData) {
+    benchObj.startTimer();
+    $('#graph').highcharts(setupData);
+  },
+  afterEach: function() {
+    destroyGraphDiv();
+  }
 
-        this.graphDiv = document.createElement('div');
-        this.graphDiv.id = 'graph';
-        document.body.appendChild(this.graphDiv);
-    },
+}];
 
-    teardown: function() {
-        document.body.removeChild(this.graphDiv);
-        this.graphDiv = null;
-    },
+var suite = {
+  meta: {
+    N: N
+  },
+  opts: {
+    sampleSize: SAMPLE_SIZE
+  },
+  specs: specs
+};
 
-    onCycle: function(event) {
-        var benchmark = event.target;
-        console.log('cycle', benchmark.name, 1 / benchmark.hz);
-    }
-});
+run(suite);
