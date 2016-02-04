@@ -2,20 +2,21 @@
 
 Javascript graphing library benchmarks.
 
-The benchmark suites in this repo are comparing
+This repo compares the performance of two javascript graphing libraries at the
+moment: 
 [Highcharts](https://github.com/highcharts/highcharts) and
-[plotly.js](https://github.com/plotly/plotly.js) at the moment.
-Comparisons with other libraries is in the plans.
+[plotly.js](https://github.com/plotly/plotly.js).
+Comparisons with other libraries are in the plans.
 
-### How to run this thing?
+## How to run this thing?
 
 ##### 1. Setup
 
 - Clone this repo
-- cd into it
+- `cd js-graphing-benchmarks`
 - Run `npm i`
 
-##### 2. Run a benchmark suite
+##### 2. Run one benchmark suite
 
 - Pick one benchmark suite (run `ls suites` for the complete list of names)
 - Run `npm run bench -- <name-of-the-suite>`
@@ -40,14 +41,14 @@ Then check the full results in `./results/<name-of-the-suite>.json`.
 - **OR** run `npm run plot` to plot the results of benchmark suites in `results/`
 
 
-### How does this work?
+## How does this work?
 
 This repo uses the [karma](https://github.com/karma-runner/karma) test-runner to
-boot browser instances from the command line. Running `npm i` installs launchers
+boot up browser instances from the command line. Running `npm i` installs launchers
 for Chrome and Firefox by default.  The
 [karma-browserify](https://github.com/nikku/karma-browserify) is used to bundle
-up CommonJS modules before running them. The
-[karam-custom](https://github.com/AlexisTessier/karma-custom) framework is used
+up CommonJS modules before execution in the browsers. The
+[karma-custom](https://github.com/AlexisTessier/karma-custom) framework is used
 for custom comminucation between the karma runner and the karma reporter.
 In addition, this repo makes use of a homemade
 [benchmarking](https://github.com/etpinard/js-graphing-benchmarks/blob/master/lib/bench.js)
@@ -56,8 +57,8 @@ utility and karma
 The homemade benchmarking utility uses
 [`window.performance`](https://developer.mozilla.org/en-US/docs/Web/API/Window/performance)
 to compute time deltas.
-Finally, results are graphed using [plotly](https://plot.ly/)'s node.js API
-[library](https://github.com/plotly/plotly-nodejs).
+Finally, the results are plotted on [plotly](https://plot.ly/) using plotly's
+[node.js API](https://github.com/plotly/plotly-nodejs).
 
 ##### What libraries are used?
 
@@ -72,10 +73,10 @@ In order to benchmark async behavior,
 adequate.
 
 
-### Adding your own benchmark suite
+## Adding your own benchmark suite
 
 *info coming soon*
 
-### Credits
+## Credits
 
 2016 Étienne Tétreault-Pinard. MIT License
