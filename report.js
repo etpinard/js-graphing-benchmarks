@@ -1,12 +1,6 @@
 var fs = require('fs');
 var path  = require('path');
 
-// var plotly = require('plotly');
-
-var pendingRequest = 0;
-var requestFinished = function () {};
-
-
 var reporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
 
@@ -17,17 +11,18 @@ var reporter = function(baseReporterDecorator, config) {
   var results = [];
 
   this.specSuccess = function(browser, result) {
-    meta = result.meta;
-    opts = result.opts;
+    // same for all specs
+    meta = result.meta;  
+    opts = result.opts;  
 
     result.benchmark.browser = browser.name;
     results.push(result.benchmark);
   };
 
   this.onRunComplete = function(browser, info) {
-
-    fs.writeFileSync(pathToOut, formatResults(results, meta, opts, config));
-
+    var formattedResults = formatResults(results, meta, opts, config);
+    fs.writeFileSync(pathToOut, formattedResults);
+    this.write('  Results written in ' + pathToOut);
   };
 
 };

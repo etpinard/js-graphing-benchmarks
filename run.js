@@ -1,6 +1,6 @@
 'use strict';
 
-var createBencher = require('./bencher');
+var createBencher = require('./bench');
 
 module.exports = function run(suite) {
 

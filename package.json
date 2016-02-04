@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "node postinstall",
-    "bench": "karma start karma.conf.js"
+    "bench": "karma start karma.conf.js",
+    "plot": "node plot.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "karma-browserify": "^5.0.1",
     "karma-chrome-launcher": "^0.2.2",
     "karma-custom": "^1.1.9",
-    "karma-firefox-launcher": "^0.1.7"
+    "karma-firefox-launcher": "^0.1.7",
+    "plotly": "^1.0.6"
   }
 }
