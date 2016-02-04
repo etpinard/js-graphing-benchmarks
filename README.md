@@ -75,7 +75,7 @@ adequate.
 
 ## Adding your own benchmark suite
 
-*info coming soon*
+See examples in `./suites/`. More info coming soon.
 
 ## Credits
 
