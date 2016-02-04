@@ -17,7 +17,7 @@ Comparisons with other libraries is in the plans.
 
 ##### 2. Run a benchmark suite
 
-- Pick one benchmark suite (`ls suites`)
+- Pick one benchmark suite (run `ls suites` for the complete list of names)
 - Run `npm run bench -- <name-of-the-suite>`
 
 Then check the full results in `./results/<name-of-the-suite>.json`.
@@ -42,11 +42,40 @@ Then check the full results in `./results/<name-of-the-suite>.json`.
 
 ### How does this work?
 
-Thi
+This repo uses the [karma](https://github.com/karma-runner/karma) test-runner to
+boot browser instances from the command line. Running `npm i` installs launchers
+for Chrome and Firefox by default.  The
+[karma-browserify](https://github.com/nikku/karma-browserify) is used to bundle
+up CommonJS modules before running them. The
+[karam-custom](https://github.com/AlexisTessier/karma-custom) framework is used
+for custom comminucation between the karma runner and the karma reporter.
+In addition, this repo makes use of a homemade
+[benchmarking](https://github.com/etpinard/js-graphing-benchmarks/blob/master/lib/bench.js)
+utility and karma
+[reporter](https://github.com/etpinard/js-graphing-benchmarks/blob/master/lib/report.js).
+The homemade benchmarking utility uses
+[`window.performance`](https://developer.mozilla.org/en-US/docs/Web/API/Window/performance)
+to compute time deltas.
+Finally, results are graphed using [plotly](https://plot.ly/)'s node.js API
+[library](https://github.com/plotly/plotly-nodejs).
 
-
-
-### What libraries are used?
+##### What libraries are used?
 
 See the *files* field in the
 [`karma.conf.js`](https://github.com/etpinard/js-graphing-benchmarks/blob/master/karma.conf.js).
+
+##### Why not use karma benchmark?
+
+In order to benchmark async behavior,
+[Karma-benchmark](https://github.com/JamieMason/karma-benchmark) and its
+[benchmark.js](https://github.com/bestiejs/benchmark.js) dependency was not
+adequate.
+
+
+### Adding your own benchmark suite
+
+*info coming soon*
+
+### Credits
+
+2016 Étienne Tétreault-Pinard. MIT License
